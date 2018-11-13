@@ -5,7 +5,7 @@
 function CopLogicAttack._chk_start_action_move_out_of_the_way(data, my_data) --As far as I can tell, this makes them give space to other units if a path isn't clear so they clip into eachother less, which, it isn't doing it's job right, is it?
 	local my_tracker = data.unit:movement():nav_tracker()
 	local reservation = {
-		radius = 100, --This MAYBE makes cops clip into eachother less when doing this specific thing, default 60.
+		radius = 80, --This MAYBE makes cops clip into eachother less when doing this specific thing, default 60.
 		position = data.m_pos,
 		filter = data.pos_rsrv_id
 	}
@@ -47,7 +47,7 @@ function CopLogicAttack._find_retreat_position(from_pos, threat_pos, threat_head
 		trace = true,
 		tracker_from = from_tracker
 	}
-	local rsrv_desc = {radius = 100} --This MAYBE makes cops clip into eachother less when doing this specific thing, default 60.
+	local rsrv_desc = {radius = 80} --This MAYBE makes cops clip into eachother less when doing this specific thing, default 60.
 	local fail_position = nil
 
 	repeat
@@ -114,9 +114,9 @@ function CopLogicAttack._find_flank_pos(data, my_data, flank_tracker, max_dist)
 
 			if best_is_hit then
 				if is_hit then
-					if error_dis < best_error_dis then
+					if error_dis < best_error_dis then --It's all 80 now.
 						local reservation = {
-							radius = 50, --If it's not the best flank position it wants and it has errors but less than the best one, set it to 50cm, I may have this one mixed up with another one, I'm not sure, this code is confusing as fuck.
+							radius = 80, 
 							position = accross_pos[1],
 							filter = data.pos_rsrv_id
 						}
@@ -129,7 +129,7 @@ function CopLogicAttack._find_flank_pos(data, my_data, flank_tracker, max_dist)
 					end
 				elseif best_has_too_much_error then
 					local reservation = {
-						radius = 50, --If it has too many errors when they tried to find stuff, just make it 50cm wide.
+						radius = 80,
 						position = accross_pos[1],
 						filter = data.pos_rsrv_id
 					}
@@ -144,7 +144,7 @@ function CopLogicAttack._find_flank_pos(data, my_data, flank_tracker, max_dist)
 			elseif best_is_miss then
 				if not too_much_error then
 					local reservation = {
-						radius = 100, --If the best isn't perfect but doesn't have too many errors, go with 100 anyways.
+						radius = 80,
 						position = accross_pos[1],
 						filter = data.pos_rsrv_id
 					}
@@ -159,7 +159,7 @@ function CopLogicAttack._find_flank_pos(data, my_data, flank_tracker, max_dist)
 				end
 			else
 				local reservation = {
-					radius = 100, --If the seek worked with no problems, GREAT! Make the position 1m wide.
+					radius = 80, 
 					position = accross_pos[1],
 					filter = data.pos_rsrv_id
 				}
